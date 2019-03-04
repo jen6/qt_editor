@@ -6,17 +6,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
-
+    this->setStyleSheet("background-color: rgb(56, 57, 57)");
     ui->horizontalLayout->setSpacing(0);
-    for(int i = 0; i < 5; ++i) {
-            ArticleButton *btn = new ArticleButton(ui->sidebarFrame);
-            ui->sidebarLayout->addWidget(btn);
-    }
+
+    connect(ui->addArticleButton, SIGNAL(clicked()), this, SLOT(addArticle()));
 
     ui->horizontalLayout->setMargin(0);
 
-    ui->sidebarLayout->setSpacing(15);
+    ui->sidebarLayout->setSpacing(10);
     ui->sidebarLayout->setMargin(0);
     ui->sidebarLayout->setAlignment(Qt::AlignTop);
 
@@ -25,10 +22,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->textEdit->setTextColor(QColor("black"));
     ui->addArticleButton->raise();
+}
 
+void MainWindow::addArticle(){
+    int currentSize = buttons.size();
+    ArticleButton *btn = new ArticleButton(
+                QString::number(currentSize),
+                QString("content, content"),
+                ui->sidebarFrame
+        );
+    buttons.push_back(btn);
+    ui->sidebarLayout->insertWidget(0, btn);
 }
 
 MainWindow::~MainWindow()
 {
+    for(auto btn : buttons)
+        delete btn;
     delete ui;
 }

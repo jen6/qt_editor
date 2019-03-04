@@ -15,6 +15,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+signals:
+public slots:
+    void addArticle();
 
 private:
     Ui::MainWindow *ui;
