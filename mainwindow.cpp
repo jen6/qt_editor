@@ -34,6 +34,8 @@ void MainWindow::addArticle(const Article &article){
                 ui->sidebarFrame
         );
     connect(btn, &ArticleButton::clicked, this, &MainWindow::changeSelectedArticle);
+    btn->setChecked(true);
+    changeSelectedArticle(article.idx);
     buttons.push_front(btn);
     ui->sidebarLayout->insertWidget(0, btn);
 }
@@ -47,7 +49,6 @@ void MainWindow::articleBufferChanged(const Article &article){
 void MainWindow::changeSelectedArticle(int idx) {
     for(auto article : buttons) {
         if(article->isChecked() && (article->getIdx() != idx)) {
-            qInfo("find");
             article->setChecked();
             update();
             break;
