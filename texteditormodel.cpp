@@ -16,19 +16,18 @@ void textEditorModel::newArticleAdd(){
     currentArticleIdx = article.idx;
     articles.push_front(article);
     emit addArticle(article);
+    currentArticlePtr = &articles[0];
     emit changeShowingArticle(article);
 }
 
 //TODO on title,content changed update modifiedTime
 void textEditorModel::articleTitleChanged(const QString &title){
-    qInfo("changed!Title");
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->title = title;
     }
     //commit();
 }
 void textEditorModel::articleContentChanged(const QString &content){
-    qInfo("changed!Content");
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->content = content;
     }

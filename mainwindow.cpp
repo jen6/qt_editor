@@ -64,6 +64,10 @@ void MainWindow::addArticle(const Article &article){
         emit this->articleOpen(btn->getIdx());
     });
 
+    if(isTextChanged) {
+            emit this->articleTitleChanged(ui->articleTitleEdit->toPlainText());
+            emit this->articleContentChanged(ui->articleContentEdit->toPlainText());
+    }
     btn->setChecked(true);
     changeSelectedArticle(article.idx);
     buttons.push_front(btn);
