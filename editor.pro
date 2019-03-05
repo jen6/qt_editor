@@ -27,13 +27,14 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    articlebar.cpp \
-    articlebutton.cpp
+    articlebutton.cpp \
+    texteditormodel.cpp
 
 HEADERS += \
         mainwindow.h \
-    articlebar.h \
-    articlebutton.h
+    articlebutton.h \
+    texteditormodel.h \
+    article.h
 
 FORMS += \
         mainwindow.ui \

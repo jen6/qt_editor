@@ -20,7 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sidebarFrame->setContentsMargins(0,0,0,0);
     ui->contentFrame->setContentsMargins(0,0,0,0);
 
-    ui->textEdit->setTextColor(QColor("black"));
+
+    ui->articleTitleEdit->setTextColor(QColor("black"));
+    ui->articleContentEdit->setTextColor(QColor("black"));
+
+    ui->articleTitleEdit->setText(QString("New Article Title"));
+    ui->articleContentEdit->setText(QString("New Content"));
+
     ui->addArticleButton->raise();
 }
 
@@ -35,9 +41,13 @@ void MainWindow::addArticle(){
     ui->sidebarLayout->insertWidget(0, btn);
 }
 
+void MainWindow::articleClicked(){
+}
+
 MainWindow::~MainWindow()
 {
     for(auto btn : buttons)
         delete btn;
     delete ui;
 }
+

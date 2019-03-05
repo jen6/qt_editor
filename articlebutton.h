@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include "article.h"
 
 namespace Ui {
 class ArticleButton;
