@@ -28,13 +28,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     articlebutton.cpp \
-    texteditormodel.cpp
+    texteditormodel.cpp \
+    tcompitem.cpp \
+    articlebuttonbroker.cpp
 
 HEADERS += \
         mainwindow.h \
     articlebutton.h \
     texteditormodel.h \
-    article.h
+    article.h \
+    tcompitem.h \
+    articlebuttonbroker.h
 
 FORMS += \
         mainwindow.ui \

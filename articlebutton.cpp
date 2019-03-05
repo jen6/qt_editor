@@ -1,17 +1,6 @@
 #include "articlebutton.h"
 #include "ui_articlebutton.h"
 
-ArticleButton::ArticleButton(QWidget *parent) :
-    QWidget(parent), ui(new Ui::ArticleButton), checked_(false){
-    ui->setupUi(this);
-    ui->articleTitle->setTextColor(QColor("black"));
-    ui->articleContent->setTextColor(QColor("black"));
-    ui->articleTitle->setAlignment(Qt::AlignLeft);
-    ui->articleContent->setAlignment(Qt::AlignLeft);
-
-    QObject::connect(this, &ArticleButton::clicked,  [=](){qInfo("clicked");});
-}
-
 ArticleButton::ArticleButton(
         const Article &article,
         QWidget *parent
@@ -57,6 +46,21 @@ bool ArticleButton::isChecked() const {
 
 void ArticleButton::setChecked(bool flag) {
     checked_ = flag;
+}
+
+void ArticleButton::updateTitle(const QString &title) {
+    ui->articleTitle->setText(title);
+    article.modifiedTime = QDateTime::currentDateTime();
+}
+
+void ArticleButton::updateContent(const QString &content) {
+    ui->articleContent->setText(content);
+    article.modifiedTime = QDateTime::currentDateTime();
+}
+
+qint64 ArticleButton::getModifiedTime() const {
+    return article.modifiedTime.toMSecsSinceEpoch();
+
 }
 
 ArticleButton::~ArticleButton()

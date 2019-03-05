@@ -15,7 +15,7 @@ void textEditorModel::newArticleAdd(){
 
     currentArticleIdx = article.idx;
     articles.push_front(article);
-    emit addArticle(article);
+    emit addArticle(articles[0]);
     currentArticlePtr = &articles[0];
     emit changeShowingArticle(article);
 }
@@ -24,12 +24,14 @@ void textEditorModel::newArticleAdd(){
 void textEditorModel::articleTitleChanged(const QString &title){
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->title = title;
+        currentArticlePtr->modifiedTime = QDateTime::currentDateTime();
     }
     //commit();
 }
 void textEditorModel::articleContentChanged(const QString &content){
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->content = content;
+        currentArticlePtr->modifiedTime = QDateTime::currentDateTime();
     }
     //commit();
 }

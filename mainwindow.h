@@ -31,8 +31,9 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QList<ArticleButton *> buttons;
+    ArticleButton *currentSelectedButton = nullptr;
     QTimer *titleTimer = nullptr, *contentTimer = nullptr;
-    int inputTimeout = 5000;
+    int inputTimeout = 500;
     bool isTextChanged = false;
 };
 
