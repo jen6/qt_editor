@@ -23,8 +23,9 @@ signals:
     void articleOpen(int idx);
 
 public slots:
-    void addArticle();
-    void articleClicked();
+    void addArticle(const Article &article);
+    void articleBufferChanged(const Article &article);
+    void changeSelectedArticle(int idx);
 
 private:
     Ui::MainWindow *ui;

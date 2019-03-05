@@ -2,25 +2,23 @@
 #include "ui_articlebutton.h"
 
 ArticleButton::ArticleButton(QWidget *parent) :
-    QPushButton(parent),
-    ui(new Ui::ArticleButton)
-{
+    QWidget(parent), ui(new Ui::ArticleButton), checked_(false){
     ui->setupUi(this);
     ui->articleTitle->setTextColor(QColor("black"));
     ui->articleContent->setTextColor(QColor("black"));
     ui->articleTitle->setAlignment(Qt::AlignLeft);
     ui->articleContent->setAlignment(Qt::AlignLeft);
+
+    QObject::connect(this, &ArticleButton::clicked,  [=](){qInfo("clicked");});
 }
 
 ArticleButton::ArticleButton(
-        QString title,
-        QString content,
+        const Article &article,
         QWidget *parent
         ) :
-    QPushButton(parent),
+    QWidget(parent),
     ui(new Ui::ArticleButton),
-    title(title),
-    content(content)
+    article(article), checked_(false)
 {
     ui->setupUi(this);
     ui->articleTitle->setTextColor(QColor("black"));
@@ -28,12 +26,38 @@ ArticleButton::ArticleButton(
     ui->articleTitle->setAlignment(Qt::AlignLeft);
     ui->articleContent->setAlignment(Qt::AlignLeft);
 
-    ui->articleTitle->setText(title);
-    ui->articleContent->setText(content);
-
+    ui->articleTitle->setText(article.title);
+    ui->articleContent->setText(article.abstractContent);
 }
 
+void  ArticleButton::paintEvent(QPaintEvent *event) {
+    if(checked_) {
+       ui->selectedBar->setStyleSheet("background-color: blue");
+    } else {
+       ui->selectedBar->setStyleSheet("background-color: white");
+    }
+}
 
+void ArticleButton::mousePressEvent(QMouseEvent *event){
+    //ignore if alreay selected
+    if(checked_) {
+        return;
+    }
+    checked_ = !checked_;
+    emit clicked(article.idx);
+}
+
+int ArticleButton::getIdx() const {
+    return article.idx;
+}
+
+bool ArticleButton::isChecked() const {
+    return checked_;
+}
+
+void ArticleButton::setChecked(bool flag) {
+    checked_ = flag;
+}
 
 ArticleButton::~ArticleButton()
 {
