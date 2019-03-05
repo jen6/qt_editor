@@ -2,6 +2,7 @@
 #define TEXTEDITORMODEL_H
 
 #include <QObject>
+#include <QTimer>
 #include "article.h"
 
 class textEditorModel : public QObject
@@ -9,11 +10,14 @@ class textEditorModel : public QObject
     Q_OBJECT
 public:
     explicit textEditorModel(QObject *parent = nullptr);
+    virtual ~textEditorModel();
 
 private:
     void saveArticle();
     void loadArticlesFromDb();
 
+    Article *currentArticlePtr = nullptr;
+    Article currentArticle;
     int currentArticleIdx;
     //TODO this dummyIdx will changed to sqlite auto increment idx
     int dummyIdx;

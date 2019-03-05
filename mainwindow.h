@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 #include "articlebutton.h"
 
 namespace Ui {
@@ -30,7 +31,9 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QList<ArticleButton *> buttons;
-    Article articleBuffer;
+    QTimer *titleTimer = nullptr, *contentTimer = nullptr;
+    int inputTimeout = 5000;
+    bool isTextChanged = false;
 };
 
 #endif // MAINWINDOW_H

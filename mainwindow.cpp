@@ -25,6 +25,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->addArticleButton->raise();
 
+    titleTimer = new QTimer(this);
+    titleTimer->setSingleShot(true);
+    contentTimer = new QTimer(this);
+    contentTimer->setSingleShot(true);
+
+    connect(titleTimer, &QTimer::timeout, [=](){
+      emit this->articleTitleChanged(ui->articleTitleEdit->toPlainText());
+      isTextChanged = false;
+    });
+    connect(contentTimer, &QTimer::timeout, [=](){
+      emit this->articleContentChanged(ui->articleContentEdit->toPlainText());
+      isTextChanged = false;
+    });
+    connect(ui->articleTitleEdit, &QTextEdit::textChanged, [=](){
+      isTextChanged = true;
+        this->titleTimer->start(this->inputTimeout);
+    });
+    connect(ui->articleContentEdit, &QTextEdit::textChanged, [=](){
+      isTextChanged = true;
+        this->contentTimer->start(this->inputTimeout);
+    });
+
     connect(ui->addArticleButton, &QPushButton::clicked, [=](){emit this->newArticleAdd();});
 }
 
@@ -34,6 +56,14 @@ void MainWindow::addArticle(const Article &article){
                 ui->sidebarFrame
         );
     connect(btn, &ArticleButton::clicked, this, &MainWindow::changeSelectedArticle);
+    connect(btn, &ArticleButton::clicked, [=](){
+        if(isTextChanged) {
+            emit this->articleTitleChanged(ui->articleTitleEdit->toPlainText());
+            emit this->articleContentChanged(ui->articleContentEdit->toPlainText());
+        }
+        emit this->articleOpen(btn->getIdx());
+    });
+
     btn->setChecked(true);
     changeSelectedArticle(article.idx);
     buttons.push_front(btn);
@@ -41,9 +71,8 @@ void MainWindow::addArticle(const Article &article){
 }
 
 void MainWindow::articleBufferChanged(const Article &article){
-    articleBuffer = article;
-    ui->articleTitleEdit->setText(articleBuffer.title);
-    ui->articleContentEdit->setText(articleBuffer.content);
+    ui->articleTitleEdit->setText(article.title);
+    ui->articleContentEdit->setText(article.content);
 }
 
 void MainWindow::changeSelectedArticle(int idx) {
@@ -58,8 +87,16 @@ void MainWindow::changeSelectedArticle(int idx) {
 
 MainWindow::~MainWindow()
 {
-    for(auto btn : buttons)
-        delete btn;
+    for(auto btn : buttons){
+        if (btn != nullptr)
+            delete btn;
+    }
+
+    if(contentTimer != nullptr)
+            delete contentTimer;
+    if(titleTimer != nullptr)
+            delete titleTimer;
+
     delete ui;
 }
 
