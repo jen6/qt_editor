@@ -69,6 +69,10 @@ void MainWindow::addArticle(const Article &article){
                 article,
                 ui->sidebarList
         );
+    buttons.push_front(btn);
+    currentSelectedButton = btn;
+    btn->setChecked(true);
+
     connect(btn, &ArticleButton::clicked, this, &MainWindow::changeSelectedArticle);
     connect(btn, &ArticleButton::clicked, [=](){
         if(isTextChanged) {
@@ -83,10 +87,7 @@ void MainWindow::addArticle(const Article &article){
             emit this->articleTitleChanged(ui->articleTitleEdit->toPlainText());
             emit this->articleContentChanged(ui->articleContentEdit->toPlainText());
     }
-    btn->setChecked(true);
     changeSelectedArticle(article.idx);
-    buttons.push_front(btn);
-    currentSelectedButton = btn;
 
     tCompItem *item = new tCompItem(ui->sidebarList);
     std::function<qint64()> func = [=](){return btn->getModifiedTime();};
@@ -135,3 +136,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::showEvent(QShowEvent *event) {
+    QWidget::showEvent( event );
+    emit mainWindowLoaded();
+}

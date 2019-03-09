@@ -72,14 +72,37 @@ void dataBase::addArticle(Article &article) {
     query.prepare("\
     INSERT INTO editor \
     (title, content, abstract_content, date) \
-    VALUES(:title:, :content:, :abstract_content:, :data:)\
+    VALUES(:title, :content, :abstract_content, :date)\
     ");
 
-    query.bindValue(":title:", article.title);
-    query.bindValue(":content:", article.content);
-    query.bindValue(":abstract_content:", article.abstractContent);
-    query.bindValue(":title:", article.modifiedTime.toString(Qt::ISODateWithMs));
-    query.exec();
+    query.bindValue(":title", article.title);
+    query.bindValue(":content", article.content);
+    query.bindValue(":abstract_content", article.abstractContent);
+    query.bindValue(":date", article.modifiedTime.toString(Qt::ISODateWithMs));
+    if(!query.exec()) {
+        throw std::runtime_error(query.lastError().text().toUtf8().data());
+    }
+
 
     article.idx = query.lastInsertId().toInt();
+}
+
+void dataBase::updateArticle(const Article &article) {
+    QSqlQuery query;
+    query.prepare("\
+    UPDATE editor \
+    SET title = :title, content = :content, \
+    abstract_content = :abstract_content, date = :date \
+    WHERE idx = :idx\
+    ");
+
+    query.bindValue(":title", article.title);
+    query.bindValue(":content", article.content);
+    query.bindValue(":abstract_content", article.abstractContent);
+    query.bindValue(":date", article.modifiedTime.toString(Qt::ISODateWithMs));
+    query.bindValue(":idx", article.idx);
+    if(!query.exec()) {
+        throw std::runtime_error(query.lastError().text().toUtf8().data());
+    }
+
 }

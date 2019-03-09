@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     textEditorModel m;
 
+    QObject::connect(&w, &MainWindow::mainWindowLoaded, &m, &textEditorModel::loadArticlesFromDb);
     QObject::connect(&w, &MainWindow::newArticleAdd, &m, &textEditorModel::newArticleAdd);
     QObject::connect(&m, &textEditorModel::addArticle, &w, &MainWindow::addArticle);
     QObject::connect(&w, &MainWindow::articleOpen, &m, &textEditorModel::articleOpen);

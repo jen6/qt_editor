@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include "article.h"
+#include "database.h"
 
 class textEditorModel : public QObject
 {
@@ -14,14 +15,13 @@ public:
 
 private:
     void saveArticle();
-    void loadArticlesFromDb();
 
     Article *currentArticlePtr = nullptr;
     Article currentArticle;
     int currentArticleIdx;
-    //TODO this dummyIdx will changed to sqlite auto increment idx
-    int dummyIdx;
     QList<Article> articles;
+    dataBase db;
+    const int abstractContentLength = 20;
 
 signals:
     void changeShowingArticle(const Article& article);
@@ -34,6 +34,7 @@ public slots:
     void articleTitleChanged(const QString &title);
     void articleContentChanged(const QString &content);
     void articleOpen(int idx);
+    void loadArticlesFromDb();
 };
 
 #endif // TEXTEDITORMODEL_H

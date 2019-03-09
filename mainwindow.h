@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    virtual void showEvent(QShowEvent *);
     ~MainWindow();
 
 signals:
@@ -22,6 +23,7 @@ signals:
     void articleTitleChanged(const QString &title);
     void articleContentChanged(const QString &content);
     void articleOpen(int idx);
+    void mainWindowLoaded();
 
 public slots:
     void addArticle(const Article &article);
