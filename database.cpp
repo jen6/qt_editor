@@ -66,3 +66,20 @@ void dataBase::loadArticles(QList<Article> &articles) {
         articles.push_front(art);
     }
 }
+
+void dataBase::addArticle(Article &article) {
+    QSqlQuery query;
+    query.prepare("\
+    INSERT INTO editor \
+    (title, content, abstract_content, date) \
+    VALUES(:title:, :content:, :abstract_content:, :data:)\
+    ");
+
+    query.bindValue(":title:", article.title);
+    query.bindValue(":content:", article.content);
+    query.bindValue(":abstract_content:", article.abstractContent);
+    query.bindValue(":title:", article.modifiedTime.toString(Qt::ISODateWithMs));
+    query.exec();
+
+    article.idx = query.lastInsertId().toInt();
+}
