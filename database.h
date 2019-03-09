@@ -13,7 +13,7 @@ public:
     void loadArticles(QList<Article> &articles);
     void addArticle(Article &article);
     void updateArticle(const Article &article);
-   // void deleteArticle(int idx);
+    void deleteArticle(int idx);
 
 private:
     QSqlDatabase db;

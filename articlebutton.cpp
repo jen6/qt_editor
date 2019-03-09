@@ -1,5 +1,7 @@
 #include "articlebutton.h"
 #include "ui_articlebutton.h"
+#include <QMenu>
+#include <QMouseEvent>
 
 ArticleButton::ArticleButton(
         const Article &article,
@@ -28,6 +30,13 @@ void  ArticleButton::paintEvent(QPaintEvent *event) {
 }
 
 void ArticleButton::mousePressEvent(QMouseEvent *event){
+    if (event->button() == Qt::RightButton)
+    {
+        qInfo("event %d %d", event->x(), event->y());
+        QWidget::mousePressEvent(event);
+        return;
+    }
+
     //ignore if alreay selected
     if(checked_) {
         return;
@@ -62,6 +71,7 @@ qint64 ArticleButton::getModifiedTime() const {
     return article.modifiedTime.toMSecsSinceEpoch();
 
 }
+
 
 ArticleButton::~ArticleButton()
 {

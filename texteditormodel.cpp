@@ -43,15 +43,22 @@ void textEditorModel::articleContentChanged(const QString &content){
 void textEditorModel::articleOpen(int idx){
     for(auto &article : articles) {
         if(article.idx == idx) {
-            //if(article.content.size() == 0) {
-            //        //load content from sql
-            //}
             currentArticleIdx = idx;
             currentArticlePtr = &article;
             emit changeShowingArticle(article);
             break;
         }
     }
+}
+
+void textEditorModel::articleDelete(int idx) {
+   int i = 0;
+   for(const auto &art : articles) {
+      if(art.idx == idx) break;
+      ++i;
+   }
+   articles.removeAt(i);
+   db.deleteArticle(idx);
 }
 
 void textEditorModel::loadArticlesFromDb() {

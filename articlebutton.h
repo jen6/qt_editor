@@ -24,12 +24,14 @@ public:
     qint64 getModifiedTime() const;
 
 
+
 private:
     Ui::ArticleButton *ui;
     Article article;
 
 signals:
     void clicked(int idx);
+
 protected:
     bool checked_;
     virtual void paintEvent(QPaintEvent *event) override;

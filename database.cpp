@@ -87,6 +87,15 @@ void dataBase::addArticle(Article &article) {
     article.idx = query.lastInsertId().toInt();
 }
 
+void dataBase::deleteArticle(int idx) {
+    QSqlQuery query;
+    query.prepare("\
+        DELETE FROM editor \
+        WHERE idx = :idx");
+    query.bindValue(":idx", idx);
+    query.exec();
+}
+
 void dataBase::updateArticle(const Article &article) {
     QSqlQuery query;
     query.prepare("\

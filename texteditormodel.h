@@ -34,6 +34,7 @@ public slots:
     void articleTitleChanged(const QString &title);
     void articleContentChanged(const QString &content);
     void articleOpen(int idx);
+    void articleDelete(int idx);
     void loadArticlesFromDb();
 };
 

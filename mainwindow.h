@@ -24,11 +24,13 @@ signals:
     void articleContentChanged(const QString &content);
     void articleOpen(int idx);
     void mainWindowLoaded();
+    void articleDelete(int idx);
 
 public slots:
     void addArticle(const Article &article);
     void articleBufferChanged(const Article &article);
     void changeSelectedArticle(int idx);
+    void ShowContextMenu(const QPoint &pos);
 
 private:
     Ui::MainWindow *ui;

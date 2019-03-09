@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "tcompitem.h"
 #include "articlebuttonbroker.h"
+#include <QTransform>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -62,6 +63,9 @@ MainWindow::MainWindow(QWidget *parent) :
         this->contentTimer->start(this->inputTimeout);
     });
     connect(ui->addArticleButton, &QPushButton::clicked, [=](){emit this->newArticleAdd();});
+    ui->sidebarList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->sidebarList, &QListWidget::customContextMenuRequested,
+            this, &MainWindow::ShowContextMenu);
 }
 
 void MainWindow::addArticle(const Article &article){
@@ -69,6 +73,10 @@ void MainWindow::addArticle(const Article &article){
                 article,
                 ui->sidebarList
         );
+    //btn->setContextMenuPolicy(Qt::CustomContextMenu);
+    //connect(btn, &QWidget::customContextMenuRequested,
+    //    this, &MainWindow::ShowContextMenu);
+
     buttons.push_front(btn);
     currentSelectedButton = btn;
     btn->setChecked(true);
@@ -90,6 +98,7 @@ void MainWindow::addArticle(const Article &article){
     changeSelectedArticle(article.idx);
 
     tCompItem *item = new tCompItem(ui->sidebarList);
+
     std::function<qint64()> func = [=](){return btn->getModifiedTime();};
     articleButtonBroker *broker = new articleButtonBroker(func);
     item->setData(0, qVariantFromValue(broker));
@@ -139,4 +148,31 @@ MainWindow::~MainWindow()
 void MainWindow::showEvent(QShowEvent *event) {
     QWidget::showEvent( event );
     emit mainWindowLoaded();
+}
+
+void MainWindow::ShowContextMenu(const QPoint &pos) {
+    QMenu myMenu;
+    myMenu.addAction("Delete");
+
+
+    QAction* selectedItem = myMenu.exec(this->mapToGlobal(pos));
+    if (selectedItem)
+    {
+        auto btnItem = ui->sidebarList->itemAt(pos);
+        auto btn = ui->sidebarList->itemWidget(btnItem);
+        auto artButton = static_cast<ArticleButton*>(btn);
+        //for making empty buffer when delete current selected article button
+        if(currentSelectedButton == artButton){
+            Article empty;
+            empty.title = ""; empty.content="";
+            articleBufferChanged(empty);
+        }
+
+        emit articleDelete(artButton->getIdx());
+        int idx = buttons.indexOf(artButton);
+        buttons.removeAt(idx);
+        delete btnItem;
+
+    }
+
 }
