@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
       QString title = ui->articleTitleEdit->toPlainText();
       emit this->articleTitleChanged(title);
       if(this->currentSelectedButton != nullptr) {
-        this->currentSelectedButton->updateTitle(title);
+        this->currentSelectedButton->setTitle(title);
         ui->sidebarList->sortItems(Qt::DescendingOrder);
       }
       isTextChanged = false;
@@ -46,9 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
       emit this->articleContentChanged(content);
       if(this->currentSelectedButton != nullptr) {
           if(content.size() > 20) {
-              this->currentSelectedButton->updateContent(content.mid(0,20));
+              this->currentSelectedButton->setContent(content.mid(0,20));
           } else {
-              this->currentSelectedButton->updateContent(content.mid(0));
+              this->currentSelectedButton->setContent(content.mid(0));
           }
         ui->sidebarList->sortItems(Qt::DescendingOrder);
       }

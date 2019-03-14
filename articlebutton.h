@@ -19,8 +19,8 @@ public:
     int getIdx() const;
     bool isChecked() const;
     void setChecked(bool flag=false);
-    void updateTitle(const QString &title);
-    void updateContent(const QString &content);
+    void setTitle(const QString &title);
+    void setContent(const QString &content);
     qint64 getModifiedTime() const;
 
 

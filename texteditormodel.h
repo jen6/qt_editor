@@ -32,9 +32,9 @@ signals:
 public slots:
     void addNewArticle();
     void setArticleTitle(const QString &title);
-    void articleContentChanged(const QString &content);
+    void setArticleContent(const QString &content);
     void openArticle(int idx);
-    void articleDelete(int idx);
+    void deleteArticle(int idx);
     void loadArticlesFromDb();
 };
 

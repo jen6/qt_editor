@@ -56,12 +56,12 @@ void ArticleButton::setChecked(bool flag) {
     checked_ = flag;
 }
 
-void ArticleButton::updateTitle(const QString &title) {
+void ArticleButton::setTitle(const QString &title) {
     ui->articleTitle->setText(title);
     article.modifiedTime = QDateTime::currentDateTime();
 }
 
-void ArticleButton::updateContent(const QString &content) {
+void ArticleButton::setContent(const QString &content) {
     ui->articleContent->setText(content);
     article.modifiedTime = QDateTime::currentDateTime();
 }

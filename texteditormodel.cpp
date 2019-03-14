@@ -28,7 +28,7 @@ void TextEditorModel::setArticleTitle(const QString &title){
         db.updateArticle(*currentArticlePtr);
     }
 }
-void TextEditorModel::articleContentChanged(const QString &content){
+void TextEditorModel::setArticleContent(const QString &content){
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->content = content;
         if(content.length() > abstractContentLength) {
@@ -51,7 +51,7 @@ void TextEditorModel::openArticle(int idx){
     }
 }
 
-void TextEditorModel::articleDelete(int idx) {
+void TextEditorModel::deleteArticle(int idx) {
    int i = 0;
    for(const auto &art : articles) {
       if(art.idx == idx) break;

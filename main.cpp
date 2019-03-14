@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &MainWindow::articleOpen, &m, &TextEditorModel::openArticle);
     QObject::connect(&m, &TextEditorModel::currentArticleChange, &w, &MainWindow::articleBufferChanged);
     QObject::connect(&w, &MainWindow::articleTitleChanged, &m, &TextEditorModel::setArticleTitle);
-    QObject::connect(&w, &MainWindow::articleContentChanged, &m, &TextEditorModel::articleContentChanged);
-    QObject::connect(&w, &MainWindow::articleDelete, &m, &TextEditorModel::articleDelete);
+    QObject::connect(&w, &MainWindow::articleContentChanged, &m, &TextEditorModel::setArticleTitle);
+    QObject::connect(&w, &MainWindow::articleDelete, &m, &TextEditorModel::deleteArticle);
 
     w.show();
     return app.exec();
