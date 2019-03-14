@@ -97,10 +97,10 @@ void MainWindow::addArticle(const Article &article){
     }
     changeSelectedArticle(article.idx);
 
-    tCompItem *item = new tCompItem(ui->sidebarList);
+    TCompItem *item = new TCompItem(ui->sidebarList);
 
     std::function<qint64()> func = [=](){return btn->getModifiedTime();};
-    articleButtonBroker *broker = new articleButtonBroker(func);
+    ArticleButtonBroker *broker = new ArticleButtonBroker(func);
     item->setData(0, qVariantFromValue(broker));
     item->setBackgroundColor(Qt::white);
     item->setSizeHint(btn->minimumSizeHint());

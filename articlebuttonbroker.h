@@ -4,18 +4,18 @@
 #include <functional>
 #include <QObject>
 
-class articleButtonBroker
+class ArticleButtonBroker
 {
 public:
-    articleButtonBroker() = default;
-    articleButtonBroker(const articleButtonBroker &) = default;
-    ~articleButtonBroker() = default;
-    articleButtonBroker(const std::function<qint64()> &func);
+    ArticleButtonBroker() = default;
+    ArticleButtonBroker(const ArticleButtonBroker &) = default;
+    ~ArticleButtonBroker() = default;
+    ArticleButtonBroker(const std::function<qint64()> &func);
     qint64 invoke();
 
 private:
     std::function<qint64()> func_;
 };
-Q_DECLARE_METATYPE(articleButtonBroker*);
+Q_DECLARE_METATYPE(ArticleButtonBroker*);
 
 #endif // ARTICLEBUTTONBROKER_H

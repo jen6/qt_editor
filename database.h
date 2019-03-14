@@ -6,10 +6,10 @@
 #include <QSqlDatabase>
 #include "article.h"
 
-class dataBase : public QObject
+class DataBase : public QObject
 {
 public:
-    dataBase(QObject *parent = nullptr);
+    DataBase(QObject *parent = nullptr);
     void loadArticles(QList<Article> &articles);
     void addArticle(Article &article);
     void updateArticle(const Article &article);

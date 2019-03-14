@@ -20,7 +20,7 @@ private:
     Article currentArticle;
     int currentArticleIdx;
     QList<Article> articles;
-    dataBase db;
+    DataBase db;
     const int abstractContentLength = 20;
 
 signals:

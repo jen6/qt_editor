@@ -5,12 +5,12 @@
 #include <QListWidget>
 #include "articlebutton.h"
 
-class tCompItem: public QListWidgetItem
+class TCompItem: public QListWidgetItem
 {
 public:
-    explicit tCompItem(QListWidget *parent=nullptr);
+    explicit TCompItem(QListWidget *parent=nullptr);
     virtual bool operator<(const QListWidgetItem &other) const override;
-    virtual ~tCompItem() override;
+    virtual ~TCompItem() override;
 };
 
 #endif // TCOMPITEM_H

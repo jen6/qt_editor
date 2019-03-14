@@ -8,7 +8,7 @@
 #include <QSqlResult>
 #include <QDateTime>
 
-dataBase::dataBase(QObject *parent) : QObject(parent)
+DataBase::DataBase(QObject *parent) : QObject(parent)
 {
     auto locs = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation);
     if (locs.length() == 0){
@@ -45,7 +45,7 @@ dataBase::dataBase(QObject *parent) : QObject(parent)
     query.exec();
 }
 
-void dataBase::loadArticles(QList<Article> &articles) {
+void DataBase::loadArticles(QList<Article> &articles) {
     QSqlQuery query;
     bool excuteStatus = query.exec("\
     SELECT idx, title, abstract_content, date \
@@ -67,7 +67,7 @@ void dataBase::loadArticles(QList<Article> &articles) {
     }
 }
 
-void dataBase::addArticle(Article &article) {
+void DataBase::addArticle(Article &article) {
     QSqlQuery query;
     query.prepare("\
     INSERT INTO editor \
@@ -87,7 +87,7 @@ void dataBase::addArticle(Article &article) {
     article.idx = query.lastInsertId().toInt();
 }
 
-void dataBase::deleteArticle(int idx) {
+void DataBase::deleteArticle(int idx) {
     QSqlQuery query;
     query.prepare("\
         DELETE FROM editor \
@@ -96,7 +96,7 @@ void dataBase::deleteArticle(int idx) {
     query.exec();
 }
 
-void dataBase::updateArticle(const Article &article) {
+void DataBase::updateArticle(const Article &article) {
     QSqlQuery query;
     query.prepare("\
     UPDATE editor \
