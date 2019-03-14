@@ -6,12 +6,12 @@
 #include "article.h"
 #include "database.h"
 
-class textEditorModel : public QObject
+class TextEditorModel : public QObject
 {
     Q_OBJECT
 public:
-    explicit textEditorModel(QObject *parent = nullptr);
-    virtual ~textEditorModel();
+    explicit TextEditorModel(QObject *parent = nullptr);
+    virtual ~TextEditorModel();
 
 private:
     void saveArticle();
@@ -24,16 +24,16 @@ private:
     const int abstractContentLength = 20;
 
 signals:
-    void changeShowingArticle(const Article& article);
-    void articleListLoad(const QList<Article>& articles);
+    void currentArticleChange(const Article& article);
+    void articleListLoaded(const QList<Article>& articles);
     void articleUpdated(const Article& article);
-    void addArticle(const Article& article);
+    void articleAdded(const Article& article);
 
 public slots:
-    void newArticleAdd();
-    void articleTitleChanged(const QString &title);
+    void addNewArticle();
+    void setArticleTitle(const QString &title);
     void articleContentChanged(const QString &content);
-    void articleOpen(int idx);
+    void openArticle(int idx);
     void articleDelete(int idx);
     void loadArticlesFromDb();
 };

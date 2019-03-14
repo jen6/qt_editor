@@ -1,11 +1,11 @@
 #include "texteditormodel.h"
 
-textEditorModel::textEditorModel(QObject *parent) : QObject(parent),
+TextEditorModel::TextEditorModel(QObject *parent) : QObject(parent),
     currentArticleIdx(-1)
 {
 }
 
-void textEditorModel::newArticleAdd(){
+void TextEditorModel::addNewArticle(){
     Article article;
     article.modifiedTime = QDateTime::currentDateTime();
     article.title = QString("New Memo");
@@ -15,20 +15,20 @@ void textEditorModel::newArticleAdd(){
 
     currentArticleIdx = article.idx;
     articles.push_front(article);
-    emit addArticle(articles[0]);
+    emit articleAdded(articles[0]);
     currentArticlePtr = &articles[0];
-    emit changeShowingArticle(article);
+    emit currentArticleChange(article);
 }
 
 //TODO on title,content changed update modifiedTime
-void textEditorModel::articleTitleChanged(const QString &title){
+void TextEditorModel::setArticleTitle(const QString &title){
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->title = title;
         currentArticlePtr->modifiedTime = QDateTime::currentDateTime();
         db.updateArticle(*currentArticlePtr);
     }
 }
-void textEditorModel::articleContentChanged(const QString &content){
+void TextEditorModel::articleContentChanged(const QString &content){
     if(currentArticlePtr != nullptr) {
         currentArticlePtr->content = content;
         if(content.length() > abstractContentLength) {
@@ -40,18 +40,18 @@ void textEditorModel::articleContentChanged(const QString &content){
         db.updateArticle(*currentArticlePtr);
     }
 }
-void textEditorModel::articleOpen(int idx){
+void TextEditorModel::openArticle(int idx){
     for(auto &article : articles) {
         if(article.idx == idx) {
             currentArticleIdx = idx;
             currentArticlePtr = &article;
-            emit changeShowingArticle(article);
+            emit currentArticleChange(article);
             break;
         }
     }
 }
 
-void textEditorModel::articleDelete(int idx) {
+void TextEditorModel::articleDelete(int idx) {
    int i = 0;
    for(const auto &art : articles) {
       if(art.idx == idx) break;
@@ -61,12 +61,12 @@ void textEditorModel::articleDelete(int idx) {
    db.deleteArticle(idx);
 }
 
-void textEditorModel::loadArticlesFromDb() {
+void TextEditorModel::loadArticlesFromDb() {
     db.loadArticles(articles);
     for(const auto& article : articles) {
-        emit addArticle(article);
+        emit articleAdded(article);
     }
 }
 
-textEditorModel::~textEditorModel() {
+TextEditorModel::~TextEditorModel() {
 }

@@ -32,7 +32,6 @@ void  ArticleButton::paintEvent(QPaintEvent *event) {
 void ArticleButton::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::RightButton)
     {
-        qInfo("event %d %d", event->x(), event->y());
         QWidget::mousePressEvent(event);
         return;
     }
