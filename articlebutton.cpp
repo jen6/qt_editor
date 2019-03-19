@@ -19,13 +19,18 @@ ArticleButton::ArticleButton(
 
     ui->articleTitle->setText(article.title);
     ui->articleContent->setText(article.abstractContent);
+
+    ui->selectedBar->setStyleSheet("background-color: white");
+    bColor = BackGroundColor::White;
 }
 
 void  ArticleButton::paintEvent(QPaintEvent *event) {
-    if(checked_) {
+    if(checked_ && bColor != BackGroundColor::Blue) {
        ui->selectedBar->setStyleSheet("background-color: blue");
-    } else {
+       bColor = BackGroundColor::Blue;
+    } else if(!checked_ && bColor != BackGroundColor::White) {
        ui->selectedBar->setStyleSheet("background-color: white");
+       bColor = BackGroundColor::White;
     }
 }
 
@@ -42,6 +47,7 @@ void ArticleButton::mousePressEvent(QMouseEvent *event){
     }
     checked_ = !checked_;
     emit clicked(article.idx);
+    update();
 }
 
 int ArticleButton::getIdx() const {

@@ -125,6 +125,7 @@ void MainWindow::changeSelectedArticle(int idx) {
     for(auto article : buttons) {
         if(article->isChecked() && (article->getIdx() != idx)) {
             article->setChecked();
+            article->update();
             break;
         }
     }

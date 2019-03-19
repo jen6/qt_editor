@@ -9,6 +9,10 @@ namespace Ui {
 class ArticleButton;
 }
 
+enum class BackGroundColor {
+    Unset, White, Blue
+};
+
 class ArticleButton : public QWidget
 {
     Q_OBJECT
@@ -33,7 +37,8 @@ signals:
     void clicked(int idx);
 
 protected:
-    bool checked_;
+    bool checked_ = false;
+    BackGroundColor bColor = BackGroundColor::White;
     virtual void paintEvent(QPaintEvent *event) override;
     virtual void mousePressEvent(QMouseEvent* event) override;
 };
